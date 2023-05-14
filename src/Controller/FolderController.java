@@ -1,13 +1,11 @@
 package Controller;
 
-import Interfaces.FileFoundCallback;
 import Model.Cache;
 import Model.Node;
 import View.FolderSearcherGUI;
 import View.RecentSearchesGUI;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
