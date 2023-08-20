@@ -1,4 +1,4 @@
-package Controller;
+package Structures;
 
 import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;

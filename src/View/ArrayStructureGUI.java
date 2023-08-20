@@ -1,6 +1,5 @@
 package View;
 
-import Controller.ArrayStructure;
 import Interfaces.IVisualizerGUI;
 
 import javax.swing.*;

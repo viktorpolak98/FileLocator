@@ -1,7 +1,7 @@
 package Factories;
 
-import Controller.ArrayStructure;
-import Controller.TreeStructure;
+import Structures.ArrayStructure;
+import Structures.TreeStructure;
 import Interfaces.IDataStructure;
 import Model.AvailableStructures;
 
