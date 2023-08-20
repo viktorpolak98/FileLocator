@@ -1,7 +1,9 @@
 package Controller;
 
+import Interfaces.BuildingCallback;
+import Interfaces.FileFoundCallback;
+import Interfaces.IDataStructure;
 import Model.Cache;
-import Model.Node;
 import View.FolderSearcherGUI;
 import View.RecentSearchesGUI;
 
@@ -9,18 +11,19 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FolderController {
+public class MainController {
     private final Cache cache;
-    private FolderSearcherGUI folderSearcherGUI;
-    private RecentSearchesGUI recentSearchesGUI;
+    private final RecentSearchesGUI recentSearchesGUI;
+    private final IDataStructure dataStructure;
 
-    public FolderController(int size){
+    public MainController(int size, IDataStructure dataStructure){
+        this.dataStructure = dataStructure;
         cache = createCache(size);
-        folderSearcherGUI = new  FolderSearcherGUI(this);
+        new FolderSearcherGUI(this);
         recentSearchesGUI = new RecentSearchesGUI(this);
     }
 
-    public List<Node> getRecentSearches(){
+    public List<File> getRecentSearches(){
         return cache.getAllAsSingleList();
     }
 
@@ -54,14 +57,17 @@ public class FolderController {
         return savedCache;
     }
 
-    public void search(Node root, String query){
-        FolderSearcher searcher = new FolderSearcher();
-        updateRecentSearches(searcher);
-        searcher.traverseConcurrently(root, query, folderSearcherGUI);
+    public void createDataStructure(File rootFile, BuildingCallback callback){
+        dataStructure.build(rootFile, callback);
     }
 
-    private void updateRecentSearches(FolderSearcher searcher){
-        recentSearchesGUI.recentSearches(searcher.getPreviousSearch());
+    public void search(String query, FileFoundCallback callback){
+        dataStructure.search(query, callback);
+        updateRecentSearches();
+    }
+
+    private void updateRecentSearches(){
+        recentSearchesGUI.recentSearches(dataStructure.getPreviousSearch());
     }
 
 }

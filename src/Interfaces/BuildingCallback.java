@@ -1,7 +1,5 @@
 package Interfaces;
-
-import Model.Node;
-
+@FunctionalInterface
 public interface BuildingCallback {
-    void onBuilding(Node root);
+    void onBuilding(String name);
 }

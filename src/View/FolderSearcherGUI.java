@@ -1,11 +1,8 @@
 package View;
 
-import Controller.FolderController;
-import Controller.FolderSearcher;
-import Controller.TreeBuilder;
+import Controller.MainController;
 import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
-import Model.Node;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,20 +10,13 @@ import java.awt.*;
 import java.io.File;
 
 public class FolderSearcherGUI extends JFrame implements FileFoundCallback, BuildingCallback {
-    private JTable resultsTable;
     private JTextField folderField;
     private DefaultTableModel tableModel;
-    private Node root;
-    private FolderController controller;
+    private final MainController controller;
 
-    public FolderSearcherGUI(FolderController controller) {
+    public FolderSearcherGUI(MainController controller) {
         this.controller = controller;
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                controller.saveCache();
-            }
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(controller::saveCache));
 
         setTitle("Folder Searcher");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +38,7 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
         JPanel panel = new JPanel(new BorderLayout());
 
         tableModel = new DefaultTableModel(new String[]{"File Name", "Path"}, 0);
-        resultsTable = new JTable(tableModel);
+        JTable resultsTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 
         panel.add(scrollPane, BorderLayout.SOUTH);
@@ -72,7 +62,7 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
             }
 
             tableModel.setRowCount(0);
-            controller.search(root, query);
+            controller.search(query, this);
         });
 
         returnPanel.add(queryLabel, BorderLayout.WEST);
@@ -99,18 +89,9 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
             int result = chooser.showOpenDialog(this);
 
             if (result == JFileChooser.APPROVE_OPTION){
-                File file = chooser.getSelectedFile();
-                if (file.isDirectory()){
-                    root = new Node(file);
-                    Thread treeBuilderThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TreeBuilder.buildTree(root.getFile(), root, FolderSearcherGUI.this);
-                        }
-                    });
-
-                    treeBuilderThread.start();
-
+                File rootFile = chooser.getSelectedFile();
+                if (rootFile.isDirectory()){
+                    controller.createDataStructure(rootFile, this);
                 }
             }
 
@@ -131,9 +112,8 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
         });
     }
 
-    public void onBuilding(Node root){
-        SwingUtilities.invokeLater(() -> {
-            folderField.setText(root.getFile().getName());
-        });
+    @Override
+    public void onBuilding(String name){
+        SwingUtilities.invokeLater(() -> folderField.setText(name));
     }
 }

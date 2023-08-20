@@ -1,7 +1,8 @@
-import Controller.FolderController;
+import Controller.MainController;
+import Controller.StartupController;
 
 public class Main {
     public static void main(String[] args) {
-        new FolderController(5);
+        new StartupController(5);
     }
 }

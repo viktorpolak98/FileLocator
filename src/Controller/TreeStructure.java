@@ -1,28 +1,53 @@
 package Controller;
 
+import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
+import Interfaces.IDataStructure;
 import Model.Node;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class FolderSearcher {
+public class TreeStructure implements IDataStructure<Node> {
     private final ExecutorService executor;
-    private final ArrayList<Node> previousResultList;
+    private final List<File> previousResultList;
+    private Node rootNode;
 
-    public FolderSearcher() {
-        int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
-        executor = Executors.newFixedThreadPool(THREAD_COUNT);
+    public TreeStructure() {
+        executor = Executors.newCachedThreadPool();
         previousResultList =  new ArrayList<>();
     }
+    @Override
+    public Node build(File rootFile, BuildingCallback callback) {
+        if (!rootFile.isDirectory()){
+            return null;
+        }
 
-    public void traverseConcurrently(Node root, String searchQuery, FileFoundCallback callback) {
+        rootNode = new Node(rootFile);
+        buildTree(rootNode, callback);
+
+        return rootNode;
+    }
+
+    public void buildTree(Node node, BuildingCallback callback) {
+        for (File childFile : Objects.requireNonNull(node.getFile().listFiles())) {
+            Node childNode = new Node(new File(childFile.getName()));
+            node.addChild(childNode);
+            buildTree(childNode, callback);
+        }
+        callback.onBuilding(node.getFile().getName());
+    }
+
+    @Override
+    public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
         previousResultList.clear();
-        for (Node child : root.getChildren()) {
-            traverseFolder(child, searchQuery, callback);
+        for (Node child : rootNode.getChildren()) {
+            traverseFolder(child, searchQuery, fileFoundCallback);
         }
 
         executor.shutdown();
@@ -32,7 +57,6 @@ public class FolderSearcher {
             e.printStackTrace();
         }
         notifyAll();
-
     }
 
     private void traverseFolder(Node node, String searchQuery, FileFoundCallback callback) {
@@ -49,13 +73,14 @@ public class FolderSearcher {
             } else {
                 if (child.getFile().getName().contains(searchQuery)) {
                     callback.onFileFound(child.getFile());
-                    previousResultList.add(child);
+                    previousResultList.add(child.getFile());
                 }
             }
         }
     }
 
-    public List<Node> getPreviousSearch() {
+    @Override
+    public List<File> getPreviousSearch() {
         try {
             wait();
         } catch (InterruptedException e){
@@ -64,6 +89,4 @@ public class FolderSearcher {
 
         return previousResultList;
     }
-
 }
-

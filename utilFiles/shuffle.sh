@@ -11,8 +11,8 @@ allArr=()
 dirrArr=()
 fileArr=()
 
-for f in "$root_path/*"; do
-    allArr+=($f)
+for f in $root_path/*; do
+    allArr+=("$f")
 done
 
 for file in "${allArr[@]}"; do
@@ -22,3 +22,25 @@ for file in "${allArr[@]}"; do
         dirrArr+=($file)
     fi
 done
+
+arrLength="${#dirrArr[@]}"
+((arrLength++))
+
+#for file in "${fileArr[@]}"; do
+#    location=$(($RANDOM%$arrLength-1))
+#    mv $file ${dirrArr[$location]}
+#done
+
+echo "${dirrArr[@]}"
+
+for (( i=0; i<arrLength-1; i++ )); do
+    location=$((RANDOM%$"${#dirrArr[@]}"-1))
+    dirrArr=("${dirrArr[@]:0:1}" "${dirrArr[@]:$((1+1))}")
+done
+
+echo "${dirrArr[@]}"
+
+#for file in "${dirrArr[@]}"; do
+#    location=$(($RANDOM%$arrLength-1))
+#    mv $file ${dirrArr[$location]}
+#done
