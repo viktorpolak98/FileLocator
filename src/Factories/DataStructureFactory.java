@@ -19,6 +19,16 @@ public class DataStructureFactory {
         return null;
     }
 
+    public static IDataStructure build(String structureType){
+        for (AvailableStructures structures : AvailableStructures.values()){
+            if (structures.name().equals(structureType)){
+                return build(structures);
+            }
+        }
+
+        return null;
+    }
+
     public static IDataStructure build(AvailableStructures structureType){
         return switch (structureType) {
             case ArrayStructure -> new ArrayStructure();

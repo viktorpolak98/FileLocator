@@ -6,9 +6,9 @@ import Model.AvailableStructures;
 import javax.swing.*;
 import java.awt.*;
 
-//TODO: Implement chooser for structure, call controller.setStructure after choice
 public class StructureChooserGUI extends JFrame {
-    StartupController controller;
+    private StartupController controller;
+    private ButtonGroup buttonGroup;
 
     public StructureChooserGUI(StartupController controller){
         this.controller = controller;
@@ -16,19 +16,20 @@ public class StructureChooserGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(250, 400);
         setMinimumSize(new Dimension(250, 400));
-        add(new JScrollPane(createPanel()));
+        add(new JScrollPane(createMainPanel()), BorderLayout.NORTH);
+        add(createBottomPanel(), BorderLayout.SOUTH);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private JPanel createPanel(){
+    private JPanel createMainPanel(){
         JLabel label = new JLabel("Choose a structure");
         JPanel panel = new JPanel();
 
         panel.add(label);
 
-        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup = new ButtonGroup();
         populateJList(panel, buttonGroup);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -36,9 +37,23 @@ public class StructureChooserGUI extends JFrame {
         return panel;
     }
 
+    private JPanel createBottomPanel(){
+        JPanel panel = new JPanel();
+        JButton btn = new JButton("Create");
+        btn.addActionListener(e -> {
+            if (buttonGroup.getSelection() != null) {
+                controller.createDataStructure(buttonGroup.getSelection().getActionCommand());
+            }
+        });
+        panel.add(btn);
+
+        return panel;
+    }
+
     private void populateJList(JPanel panel, ButtonGroup buttonGroup){
         for (AvailableStructures structure : AvailableStructures.values()){
             JRadioButton jRadioButton = new JRadioButton(structure.name(), false);
+            jRadioButton.setActionCommand(structure.name());
             panel.add(jRadioButton);
             buttonGroup.add(jRadioButton);
         }
