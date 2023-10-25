@@ -88,5 +88,4 @@ public class ArrayStructure implements IDataStructure<List<File>> {
             }
         }
     }
-
 }

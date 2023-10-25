@@ -9,13 +9,20 @@ import java.awt.*;
 
 public class TreeStructureGUI extends JFrame implements IVisualizerGUI {
 
+    private final Node root;
     public TreeStructureGUI(Node root) {
+        this.root = root;
+    }
+
+    @Override
+    public void startGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         TreeVisualization treeVisualization = new TreeVisualization(root);
         add(treeVisualization);
         setVisible(true);
     }
+
     private class TreeVisualization extends JPanel{
         private final Node root;
 

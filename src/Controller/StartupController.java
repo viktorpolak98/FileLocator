@@ -2,7 +2,6 @@ package Controller;
 
 import Factories.DataStructureFactory;
 import Interfaces.IDataStructure;
-import Model.AvailableStructures;
 import View.StructureChooserGUI;
 
 public class StartupController {
