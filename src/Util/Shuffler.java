@@ -25,41 +25,31 @@ public class Shuffler {
         ArrayList<File> files = getArrayListOfFiles();
         for (File file : files) {
             int folderIndex = random.nextInt(NUM_DIRECTORIES);
-            try {
-                Files.move(file.toPath(), folders.get(folderIndex).toPath(), StandardCopyOption.ATOMIC_MOVE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String path = folders.get(folderIndex).getAbsolutePath();
+            path += "/";
+            path += file.getName();
+            file.renameTo(new File(path));
         }
-
     }
 
     private void assignFolder(ArrayList<File> folders){
-        for (int i = 0; i < NUM_DIRECTORIES; i++){
-            int folderSize = folders.size();
-            int index = random.nextInt(folderSize + 1) - 1;
-            if (index == i){
-                index++;
-            }
-            moveFolder(folders.get(i).toPath(), folders.get(index).toPath());
-            folders.remove(i);
-        }
-    }
+        for(int i = NUM_DIRECTORIES - 1; i > 0; i--){
+            int index = random.nextInt(i);
+            String path = folders.get(index).getAbsolutePath();
+            path += "/";
+            path += folders.get(i).getName();
+            folders.get(i).renameTo(new File(path));
 
-    private void moveFolder(Path source, Path target){
-        try {
-            Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     private ArrayList<File> getArrayListOfFiles(){
         ArrayList<File> files = new ArrayList<>();
         for (File file : Objects.requireNonNull(root.listFiles())){
-            if (file.isFile()){
-                files.add(file);
+            if (!file.isFile()){
+                continue;
             }
+            files.add(file);
         }
 
         return files;
