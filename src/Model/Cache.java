@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 
 public class Cache implements Serializable {
@@ -26,8 +27,8 @@ public class Cache implements Serializable {
         cache.clear();
     }
 
-    public List<File> getAllAsSingleList(){
-        ArrayList<File> fileArrayList = new ArrayList<>();
+    public Vector<File> getAllAsSingleList(){
+        Vector<File> fileArrayList = new Vector<>();
         for (List<File> list : cache) {
             fileArrayList.addAll(list);
         }

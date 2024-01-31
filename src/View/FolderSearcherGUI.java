@@ -3,6 +3,7 @@ package View;
 import Controller.MainController;
 import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
+import Model.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +12,7 @@ import java.io.File;
 
 public class FolderSearcherGUI extends JFrame implements FileFoundCallback, BuildingCallback {
     private JTextField folderField;
-    private DefaultTableModel tableModel;
+    private TableModel tableModel;
     private final MainController controller;
 
     public FolderSearcherGUI(MainController controller) {
@@ -37,7 +38,7 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
     private JPanel createMainPanel(){
         JPanel panel = new JPanel(new BorderLayout());
 
-        tableModel = new DefaultTableModel(new String[]{"File Name", "Path"}, 0);
+        tableModel = new TableModel(new String[]{"File Name", "Path"}, 0);
         JTable resultsTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 

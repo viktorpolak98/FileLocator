@@ -1,8 +1,9 @@
 package Interfaces;
 
 import java.io.File;
-import java.util.List;
+import java.util.Vector;
+
 @FunctionalInterface
 public interface RecentSearchesCallback {
-    void recentSearches(List<File> files);
+    void recentSearches(Vector<File> files);
 }

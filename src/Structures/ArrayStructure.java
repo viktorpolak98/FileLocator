@@ -7,10 +7,7 @@ import Model.Node;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -18,12 +15,12 @@ import java.util.concurrent.TimeUnit;
 public class ArrayStructure implements IDataStructure<List<File>> {
     private ExecutorService executor;
     private final int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
-    private final List<File> previousResultList;
+    private final Vector<File> previousResultList;
     private List<File> rootList;
 
     public ArrayStructure(){
         executor = Executors.newFixedThreadPool(THREAD_COUNT);
-        previousResultList = new ArrayList<>();
+        previousResultList = new Vector<>();
     }
 
     @Override
@@ -41,7 +38,7 @@ public class ArrayStructure implements IDataStructure<List<File>> {
     }
 
     @Override
-    public List<File> getPreviousSearch() {
+    public Vector<File> getPreviousSearch() {
         try {
             wait();
         } catch (InterruptedException e) {

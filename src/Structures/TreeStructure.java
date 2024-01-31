@@ -9,18 +9,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class TreeStructure implements IDataStructure<Node> {
     private final ExecutorService executor;
-    private final List<File> previousResultList;
+    private final Vector<File> previousResultList;
     private Node rootNode;
 
     public TreeStructure() {
         executor = Executors.newCachedThreadPool();
-        previousResultList =  new ArrayList<>();
+        previousResultList =  new Vector<>();
     }
     @Override
     public Node build(File rootFile, BuildingCallback callback) {
@@ -35,28 +36,34 @@ public class TreeStructure implements IDataStructure<Node> {
     }
 
     public void buildTree(Node node, BuildingCallback callback) {
+        String path = node.getFile().getAbsolutePath() + "/";
         for (File childFile : Objects.requireNonNull(node.getFile().listFiles())) {
-            Node childNode = new Node(new File(childFile.getName()));
+            Node childNode = new Node(new File(path + childFile.getName()));
             node.addChild(childNode);
+            if(!childFile.isDirectory()){
+                continue;
+            }
             buildTree(childNode, callback);
         }
         callback.onBuilding(node.getFile().getName());
     }
 
+
+    //TODO: Fix: Current thread is not owner
     @Override
     public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
         previousResultList.clear();
         for (Node child : rootNode.getChildren()) {
             traverseFolder(child, searchQuery, fileFoundCallback);
         }
-
+/*
         executor.shutdown();
         try {
-            executor.awaitTermination(5, TimeUnit.MINUTES);
+            executor.awaitTermination(1, TimeUnit.MINUTES);
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-        notifyAll();
+        notifyAll();*/
     }
 
     private void traverseFolder(Node node, String searchQuery, FileFoundCallback callback) {
@@ -80,13 +87,14 @@ public class TreeStructure implements IDataStructure<Node> {
     }
 
     @Override
-    public List<File> getPreviousSearch() {
-        try {
+    public Vector<File> getPreviousSearch() {
+        /*try {
             wait();
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-
+        System.out.println("Done: " + previousResultList.size());
+*/
         return previousResultList;
     }
 }

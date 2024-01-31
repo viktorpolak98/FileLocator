@@ -6,6 +6,5 @@ public class MainCreate {
         DirectoryGenerator.generateDirectories(100);
         String path = System.getenv("FileFolderHolderLocation");
         new Shuffler(path);
-
     }
 }

@@ -23,6 +23,7 @@ public class Shuffler {
 
     private void moveFileToFolder(ArrayList<File> folders) {
         ArrayList<File> files = getArrayListOfFiles();
+        Set<String> set = new HashSet<>();
         for (File file : files) {
             int folderIndex = random.nextInt(NUM_DIRECTORIES);
             String path = folders.get(folderIndex).getAbsolutePath();

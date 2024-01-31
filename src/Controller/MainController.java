@@ -10,6 +10,7 @@ import View.RecentSearchesGUI;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 public class MainController {
     private final Cache cache;
@@ -23,7 +24,7 @@ public class MainController {
         recentSearchesGUI = new RecentSearchesGUI(this);
     }
 
-    public List<File> getRecentSearches(){
+    public Vector<File> getRecentSearches(){
         return cache.getAllAsSingleList();
     }
 

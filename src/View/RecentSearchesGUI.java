@@ -2,12 +2,14 @@ package View;
 
 import Controller.MainController;
 import Interfaces.RecentSearchesCallback;
+import Model.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback {
     private final DefaultTableModel tableModel;
@@ -17,7 +19,8 @@ public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        tableModel = new DefaultTableModel(new String[]{"File Name", "Path"}, 0);
+        tableModel = new TableModel(new String[]{"File Name", "Path"}, 0);
+
         JTable resultsTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 
@@ -32,7 +35,7 @@ public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback 
     }
 
     @Override
-    public void recentSearches(List<File> files) {
+    public void recentSearches(Vector<File> files) {
         for(File file : files){
             Object[] row = new Object[]{file.getName(), file.getAbsolutePath()};
             tableModel.addRow(row);
