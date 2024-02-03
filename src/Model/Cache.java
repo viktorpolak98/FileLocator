@@ -9,15 +9,15 @@ import java.util.Vector;
 
 public class Cache implements Serializable {
     private final long serialVersionUID = 1L;
-    private final LinkedList<List<File>> cache;
+    private final LinkedList<Vector<File>> cache;
     private final int MAX_SIZE;
 
-    public Cache(int size, LinkedList<List<File>> cache){
+    public Cache(int size, LinkedList<Vector<File>> cache){
         MAX_SIZE = size;
         this.cache = cache;
     }
 
-    public void add(List<File> files){
+    public void add(Vector<File> files){
         cache.addLast(files);
         if (cache.size() > MAX_SIZE){
             cache.removeFirst();

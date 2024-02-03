@@ -40,7 +40,6 @@ public class Shuffler {
             path += "/";
             path += folders.get(i).getName();
             folders.get(i).renameTo(new File(path));
-
         }
     }
 
