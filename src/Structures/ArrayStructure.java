@@ -79,10 +79,10 @@ public class ArrayStructure implements IDataStructure<List<File>> {
     private void populateArray(File rootFile, List<File> files, BuildingCallback callback){
         for(File file: Objects.requireNonNull(rootFile.listFiles())){
             files.add(file);
-            callback.onBuilding(file.getName());
             if (file.isDirectory()){
                 populateArray(file, files, callback);
             }
         }
+        callback.onBuilding(rootFile.getName());
     }
 }

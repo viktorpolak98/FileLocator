@@ -24,7 +24,6 @@ public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback 
         JTable resultsTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 
-        recentSearches(controller.getRecentSearches());
 
         mainPanel.add(scrollPane);
 
@@ -32,6 +31,8 @@ public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+        recentSearches(controller.getRecentSearches());
     }
 
     @Override

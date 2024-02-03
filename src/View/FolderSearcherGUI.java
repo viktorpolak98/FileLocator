@@ -6,7 +6,6 @@ import Interfaces.FileFoundCallback;
 import Model.TableModel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 
@@ -114,7 +113,7 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
     }
 
     @Override
-    public void onBuilding(String name){
+    public synchronized void onBuilding(String name){
         SwingUtilities.invokeLater(() -> folderField.setText(name));
     }
 }

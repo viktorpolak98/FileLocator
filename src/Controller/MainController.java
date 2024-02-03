@@ -68,7 +68,10 @@ public class MainController {
     }
 
     private void updateRecentSearches(){
-        recentSearchesGUI.recentSearches(dataStructure.getPreviousSearch());
+        Vector<File> files = dataStructure.getPreviousSearch();
+        cache.add(files);
+
+        recentSearchesGUI.recentSearches(files);
     }
 
 }

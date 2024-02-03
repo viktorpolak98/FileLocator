@@ -75,7 +75,7 @@ public class TreeStructure implements IDataStructure<Node> {
 
     @Override
     public Vector<File> getPreviousSearch() {
-        //busy waiting change later
+        //busy waiting: change later
         while (executor.getActiveCount()!= 0){
             try {
                 Thread.sleep(100);
