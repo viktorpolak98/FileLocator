@@ -4,10 +4,12 @@ import Factories.DataStructureFactory;
 import Interfaces.IDataStructure;
 import View.StructureChooserGUI;
 
+import javax.swing.*;
+
 public class StartupController {
     private final int cacheSize;
     private IDataStructure dataStructure;
-    private StructureChooserGUI structureChooserGUI;
+    private final StructureChooserGUI structureChooserGUI;
     public StartupController(int cacheSize){
         structureChooserGUI = new StructureChooserGUI(this);
         this.cacheSize = cacheSize;
@@ -15,7 +17,9 @@ public class StartupController {
 
     public void createDataStructure(String structure){
         dataStructure = DataStructureFactory.build(structure);
-        startMainGUI();
+        if (!startMainGUI()){
+            JOptionPane.showMessageDialog(new JFrame(), "Please select an option");
+        }
     }
 
     public boolean startMainGUI(){

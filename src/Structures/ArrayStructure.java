@@ -3,68 +3,59 @@ package Structures;
 import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
-import Model.Node;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadPoolExecutor;
 
-public class ArrayStructure implements IDataStructure<List<File>> {
-    private ExecutorService executor;
-    private final int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
+public class ArrayStructure implements IDataStructure {
+    private ThreadPoolExecutor executor;
+    private int threadCount;
     private final Vector<File> previousResultList;
     private List<File> rootList;
 
     public ArrayStructure(){
-        executor = Executors.newFixedThreadPool(THREAD_COUNT);
         previousResultList = new Vector<>();
     }
 
     @Override
-    public List<File> build(File rootFile, BuildingCallback callback){
+    public ArrayStructure build(File rootFile, BuildingCallback callback){
         rootList = new ArrayList<>();
 
         populateArray(rootFile, rootList, callback);
 
-        return rootList;
+        return this;
     }
 
     @Override
-    public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
+    public Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback) {
+        threadCount = Runtime.getRuntime().availableProcessors();
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         searchConcurrently((File[]) rootList.toArray(), searchQuery, fileFoundCallback);
-    }
 
-    @Override
-    public Vector<File> getPreviousSearch() {
-        try {
-            wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //busy waiting: change later
+        while (executor.getActiveCount()!= 0){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return previousResultList;
+        executor.shutdown();
+
+        return new Vector<>(previousResultList);
     }
 
     private void searchConcurrently(File[] files, String searchQuery, FileFoundCallback callback){
-        int searchField = files.length / THREAD_COUNT;
+        int searchField = files.length / threadCount;
 
-        for(int i = 0; i < THREAD_COUNT; i++){
+        for(int i = 0; i < threadCount; i++){
             int start = searchField * i;
             int end = searchField * (i + 1);
             File[] subFiles = Arrays.copyOfRange(files, start, end);
             executor.submit(() -> searchSubArray(subFiles, searchQuery, callback));
         }
-
-        executor.shutdown();
-        try {
-            executor.awaitTermination(5, TimeUnit.MINUTES);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        notifyAll();
     }
 
     private void searchSubArray(File[] files, String searchQuery, FileFoundCallback callback){

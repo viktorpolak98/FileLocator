@@ -57,7 +57,7 @@ public class FolderSearcherGUI extends JFrame implements FileFoundCallback, Buil
             String folderPath = folderField.getText();
             String query = queryField.getText();
             if (folderPath.isEmpty() || query.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please enter a folder path and search query.");
+                JOptionPane.showMessageDialog(this, "Please enter a folder path and search query");
                 return;
             }
 

@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.*;
 
-public class TreeStructure implements IDataStructure<Node> {
+public class TreeStructure implements IDataStructure {
     private ThreadPoolExecutor executor;
     private final Vector<File> previousResultList;
     private Node rootNode;
@@ -20,7 +20,7 @@ public class TreeStructure implements IDataStructure<Node> {
         previousResultList =  new Vector<>();
     }
     @Override
-    public Node build(File rootFile, BuildingCallback callback) {
+    public TreeStructure build(File rootFile, BuildingCallback callback) {
         if (!rootFile.isDirectory()){
             return null;
         }
@@ -28,7 +28,7 @@ public class TreeStructure implements IDataStructure<Node> {
         rootNode = new Node(rootFile);
         buildTree(rootNode, callback);
 
-        return rootNode;
+        return this;
     }
 
     public void buildTree(Node node, BuildingCallback callback) {
@@ -43,14 +43,25 @@ public class TreeStructure implements IDataStructure<Node> {
         callback.onBuilding(node.getFile().getName());
     }
 
-
     @Override
-    public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
+    public Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback) {
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         previousResultList.clear();
         for (Node child : rootNode.getChildren()) {
             traverseFolder(child, searchQuery, fileFoundCallback);
         }
+
+        //busy waiting: change later
+        while (executor.getActiveCount()!= 0){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        executor.shutdown();
+
+        return new Vector<>(previousResultList);
     }
 
     private void traverseFolder(Node node, String searchQuery, FileFoundCallback callback) {
@@ -71,19 +82,5 @@ public class TreeStructure implements IDataStructure<Node> {
                 }
             }
         }
-    }
-
-    @Override
-    public Vector<File> getPreviousSearch() {
-        //busy waiting: change later
-        while (executor.getActiveCount()!= 0){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        executor.shutdown();
-        return previousResultList;
     }
 }
