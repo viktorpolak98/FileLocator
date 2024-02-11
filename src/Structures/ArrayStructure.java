@@ -20,12 +20,11 @@ public class ArrayStructure implements IDataStructure {
     }
 
     @Override
-    public ArrayStructure build(File rootFile, BuildingCallback callback){
+    public void build(File rootFile, BuildingCallback callback){
         rootList = new ArrayList<>();
 
         populateArray(rootFile, rootList, callback);
 
-        return this;
     }
 
     @Override

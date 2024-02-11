@@ -20,15 +20,14 @@ public class TreeStructure implements IDataStructure {
         previousResultList =  new Vector<>();
     }
     @Override
-    public TreeStructure build(File rootFile, BuildingCallback callback) {
+    public void build(File rootFile, BuildingCallback callback) {
         if (!rootFile.isDirectory()){
-            return null;
+            return;
         }
 
         rootNode = new Node(rootFile);
         buildTree(rootNode, callback);
 
-        return this;
     }
 
     public void buildTree(Node node, BuildingCallback callback) {
