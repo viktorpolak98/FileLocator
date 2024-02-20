@@ -1,4 +1,4 @@
-package View;
+package DesktopApp.View;
 
 import Controller.StartupController;
 import Model.AvailableStructures;

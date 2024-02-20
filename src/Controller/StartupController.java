@@ -2,7 +2,7 @@ package Controller;
 
 import Factories.DataStructureFactory;
 import Interfaces.IDataStructure;
-import View.StructureChooserGUI;
+import DesktopApp.View.StructureChooserGUI;
 
 import javax.swing.*;
 

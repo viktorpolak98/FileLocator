@@ -1,4 +1,4 @@
-package View;
+package DesktopApp.View;
 
 import Controller.MainController;
 import Interfaces.RecentSearchesCallback;
@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
-import java.util.List;
 import java.util.Vector;
 
 public class RecentSearchesGUI extends JFrame implements RecentSearchesCallback {
