@@ -4,12 +4,11 @@ import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
 import Model.Cache;
-import View.FolderSearcherGUI;
-import View.RecentSearchesGUI;
+import DesktopApp.View.FolderSearcherGUI;
+import DesktopApp.View.RecentSearchesGUI;
 
 import java.io.*;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 public class MainController {
