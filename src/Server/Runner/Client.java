@@ -13,7 +13,6 @@ import java.util.Vector;
 public class Client implements Runnable, FileFoundCallback {
     private final Socket socket;
     private IDataStructure structure;
-    private boolean active;
     private final Timer timer = new Timer();
     private final long TIME_OUT = 300_000;
 
@@ -42,7 +41,7 @@ public class Client implements Runnable, FileFoundCallback {
     private boolean restartTimer(){
         timer.cancel();
         try {
-            startTimeOut();
+            startTimer();
         } catch (RuntimeException e){
             e.printStackTrace();
             return false;
@@ -50,7 +49,7 @@ public class Client implements Runnable, FileFoundCallback {
         return true;
     }
 
-    private void startTimeOut() throws RuntimeException {
+    private void startTimer() throws RuntimeException {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
