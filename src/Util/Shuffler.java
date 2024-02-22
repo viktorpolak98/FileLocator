@@ -1,10 +1,6 @@
 package Util;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 public class Shuffler {
@@ -23,7 +19,6 @@ public class Shuffler {
 
     private void moveFileToFolder(ArrayList<File> folders) {
         ArrayList<File> files = getArrayListOfFiles();
-        Set<String> set = new HashSet<>();
         for (File file : files) {
             int folderIndex = random.nextInt(NUM_DIRECTORIES);
             String path = folders.get(folderIndex).getAbsolutePath();
