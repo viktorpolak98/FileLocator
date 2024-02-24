@@ -5,6 +5,7 @@ import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
 
 import java.io.File;
+import java.text.FieldPosition;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -30,8 +31,9 @@ public class ArrayStructure implements IDataStructure {
     @Override
     public Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback) {
         threadCount = Runtime.getRuntime().availableProcessors();
-        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        searchConcurrently((File[]) rootList.toArray(), searchQuery, fileFoundCallback);
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
+
+        searchConcurrently(searchQuery, fileFoundCallback);
 
         //busy waiting: change later
         while (executor.getActiveCount()!= 0){
@@ -46,23 +48,28 @@ public class ArrayStructure implements IDataStructure {
         return new Vector<>(previousResultList);
     }
 
-    private void searchConcurrently(File[] files, String searchQuery, FileFoundCallback callback){
-        int searchField = files.length / threadCount;
+    private void searchConcurrently(String searchQuery, FileFoundCallback callback){
+        //if threadCount is larger than size of list set search field to 1
+        int searchField = Math.abs(Math.max((rootList.size() / threadCount), 1));
 
-        for(int i = 0; i < threadCount; i++){
+        int i = 0;
+        while (i < rootList.size()){
             int start = searchField * i;
             int end = searchField * (i + 1);
-            File[] subFiles = Arrays.copyOfRange(files, start, end);
-            executor.submit(() -> searchSubArray(subFiles, searchQuery, callback));
+            executor.submit(() -> searchSubArray(start, end, searchQuery, callback));
+            i++;
         }
     }
 
-    private void searchSubArray(File[] files, String searchQuery, FileFoundCallback callback){
-        for (File file : files) {
-            if (file.getName().matches(searchQuery)){
+    private void searchSubArray(int start, int end, String searchQuery, FileFoundCallback callback){
+        int i = start;
+        while(i < end){
+            File file = rootList.get(i);
+            if (file.getName().contains(searchQuery)){
                 callback.onFileFound(file);
                 previousResultList.add(file);
             }
+            i++;
         }
     }
 
