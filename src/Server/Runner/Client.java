@@ -14,7 +14,6 @@ public class Client implements Runnable, FileFoundCallback {
     private final Socket socket;
     private IDataStructure structure;
     private final Timer timer = new Timer();
-    private final long TIME_OUT = 300_000;
 
     public Client(Socket socket){
         this.socket = socket;
@@ -38,10 +37,10 @@ public class Client implements Runnable, FileFoundCallback {
     public void onFileFound(File file) {
         //Send data to client
     }
-    private boolean restartTimer(){
+    public boolean restartTimer(long TIME_OUT){
         timer.cancel();
         try {
-            startTimer();
+            startTimer(TIME_OUT);
         } catch (RuntimeException e){
             e.printStackTrace();
             return false;
@@ -49,7 +48,7 @@ public class Client implements Runnable, FileFoundCallback {
         return true;
     }
 
-    private void startTimer() throws RuntimeException {
+    public void startTimer(long TIME_OUT) throws RuntimeException {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
