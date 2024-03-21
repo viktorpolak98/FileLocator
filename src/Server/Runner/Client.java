@@ -2,9 +2,11 @@ package Server.Runner;
 
 import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
+import Server.Controller.RequestHandler;
+import Server.Controller.ServerClientController;
+import Server.Model.RequestTypes;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
 import java.util.Timer;
@@ -18,13 +20,13 @@ public class Client implements Runnable, FileFoundCallback {
     private BufferedReader reader;
     private BufferedWriter writer;
     private final String clientAddress;
-    private final Server server;
+    private final ServerClientController controller;
     private final long TIME_OUT = 500_000;
 
-    public Client(Socket socket, String clientAddress, Server server){
+    public Client(Socket socket, String clientAddress, ServerClientController controller){
         this.socket = socket;
         this.clientAddress = clientAddress;
-        this.server = server;
+        this.controller = controller;
 
     }
 
@@ -32,7 +34,7 @@ public class Client implements Runnable, FileFoundCallback {
         this.structure = structure;
     }
 
-    public void handleRequest(){
+    public void receiveRequest(){
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new PrintWriter(socket.getOutputStream(), true));
@@ -41,6 +43,8 @@ public class Client implements Runnable, FileFoundCallback {
             StringTokenizer parse = new StringTokenizer(input);
 
             String method = parse.nextToken().toUpperCase();
+
+            RequestHandler.handleRequest(RequestTypes.getRequestType(method));
 
         } catch (IOException e){
             e.printStackTrace();
@@ -78,7 +82,7 @@ public class Client implements Runnable, FileFoundCallback {
             public void run() {
                 try {
                     socket.close();
-                    server.removeClient(clientAddress);
+                    controller.removeClient(clientAddress);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
