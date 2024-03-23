@@ -39,12 +39,10 @@ public class Client implements Runnable, FileFoundCallback {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new PrintWriter(socket.getOutputStream(), true));
 
-            String input = reader.readLine();
-            StringTokenizer parse = new StringTokenizer(input);
-
-            String method = parse.nextToken().toUpperCase();
-
-            RequestHandler.handleRequest(RequestTypes.getRequestType(method));
+            new RequestHandler(writer, reader).handleRequest();
+            reader.close();
+            writer.close();
+            socket.close();
 
         } catch (IOException e){
             e.printStackTrace();
