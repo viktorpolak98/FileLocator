@@ -13,12 +13,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-public class Client implements Runnable, FileFoundCallback {
+public class Client implements Runnable {
     private final Socket socket;
     private IDataStructure structure;
     private final Timer timer = new Timer();
-    private BufferedReader reader;
-    private BufferedWriter writer;
     private final String clientAddress;
     private final ServerClientController controller;
     private final long TIME_OUT = 500_000;
@@ -36,12 +34,14 @@ public class Client implements Runnable, FileFoundCallback {
 
     public void receiveRequest(){
         try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new BufferedWriter(new PrintWriter(socket.getOutputStream(), true));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedWriter writer = new BufferedWriter(new PrintWriter(socket.getOutputStream(), true));
+            BufferedOutputStream outputStream = new BufferedOutputStream(socket.getOutputStream());
 
-            new RequestHandler(writer, reader).handleRequest();
+            new RequestHandler(writer, outputStream, reader).handleRequest();
             reader.close();
             writer.close();
+            outputStream.close();
             socket.close();
 
         } catch (IOException e){
@@ -56,13 +56,6 @@ public class Client implements Runnable, FileFoundCallback {
         startTimer(TIME_OUT);
     }
 
-    public Vector<File> search(String searchQuery){
-        return structure.search(searchQuery, this);
-    }
-    @Override
-    public void onFileFound(File file) {
-        //Send data to client
-    }
     public boolean restartTimer(long TIME_OUT){
         timer.cancel();
         try {
