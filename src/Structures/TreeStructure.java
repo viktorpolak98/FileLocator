@@ -57,7 +57,7 @@ public class TreeStructure implements IDataStructure {
         }
 
         //busy waiting: change later
-        while (executor.getActiveCount()!= 0){
+        while (!isDone()){
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
