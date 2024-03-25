@@ -38,7 +38,16 @@ public class Client implements Runnable {
             BufferedWriter writer = new BufferedWriter(new PrintWriter(socket.getOutputStream(), true));
             BufferedOutputStream outputStream = new BufferedOutputStream(socket.getOutputStream());
 
-            new RequestHandler(writer, outputStream, reader).handleRequest();
+            RequestHandler requestHandler = new RequestHandler(writer, outputStream, reader);
+
+            requestHandler.handleRequest();
+            while (!requestHandler.requestIsHandled()){
+                try{
+                    Thread.sleep(100);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
             reader.close();
             writer.close();
             outputStream.close();

@@ -32,15 +32,40 @@ public class RequestHandler implements FileFoundCallback{
         Optional<RequestTypes> type = RequestTypes.getRequestType(method);
 
         if(type.isPresent()){
-            writer.write("HTTP/1.1 404 Bad request");
+            writer.write("HTTP/1.1 404 Bad request"); //autoFlush=true streams are closed in calling method
             return false;
         }
 
         return true;
     }
+    
+    //TODO: Implement
+    public boolean requestIsHandled(){
+        return true;
+    }
 
     @Override
     public synchronized void onFileFound(File file) {
+        try {
+            outputStream.write(getFileData(file));
+            outputStream.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private byte[] getFileData(File file){
+        FileInputStream fileIn = null;
 
+        byte[] data = new byte[(int) file.length()];
+
+        try{
+            fileIn = new FileInputStream(file);
+            fileIn.read(data);
+            fileIn.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return data;
     }
 }
