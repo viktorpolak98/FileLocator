@@ -21,6 +21,11 @@ public class ArrayStructure implements IDataStructure {
     }
 
     @Override
+    public boolean isDone(){
+        return executor.getActiveCount() == 0;
+    }
+
+    @Override
     public void build(File rootFile, BuildingCallback callback){
         rootList = new ArrayList<>();
 
@@ -36,7 +41,7 @@ public class ArrayStructure implements IDataStructure {
         searchConcurrently(searchQuery, fileFoundCallback);
 
         //busy waiting: change later
-        while (executor.getActiveCount()!= 0){
+        while (!isDone()){
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
