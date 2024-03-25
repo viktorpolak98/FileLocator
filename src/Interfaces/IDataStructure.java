@@ -7,4 +7,5 @@ import java.util.concurrent.Future;
 public interface IDataStructure {
     void build(File rootFile, BuildingCallback callback);
     Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback);
+    boolean isDone();
 }

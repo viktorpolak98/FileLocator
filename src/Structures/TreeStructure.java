@@ -19,6 +19,12 @@ public class TreeStructure implements IDataStructure {
     public TreeStructure() {
         previousResultList =  new Vector<>();
     }
+
+    @Override
+    public boolean isDone(){
+        return executor.getActiveCount() == 0;
+    }
+
     @Override
     public void build(File rootFile, BuildingCallback callback) {
         if (!rootFile.isDirectory()){

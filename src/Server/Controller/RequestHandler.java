@@ -38,10 +38,9 @@ public class RequestHandler implements FileFoundCallback{
 
         return true;
     }
-    
-    //TODO: Implement
+
     public boolean requestIsHandled(){
-        return true;
+        return structure.isDone();
     }
 
     @Override
