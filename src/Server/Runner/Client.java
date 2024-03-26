@@ -41,6 +41,7 @@ public class Client implements Runnable {
             RequestHandler requestHandler = new RequestHandler(writer, outputStream, reader);
 
             requestHandler.handleRequest();
+            //busy waiting: change later
             while (!requestHandler.requestIsHandled()){
                 try{
                     Thread.sleep(100);
