@@ -7,7 +7,7 @@ import Model.AvailableStructures;
 
 public class DataStructureFactory {
 
-    public static IDataStructure build(IDataStructure structure){
+    public static IDataStructure buildEmptyStructure(IDataStructure structure){
         if (structure instanceof ArrayStructure){
             return new ArrayStructure();
         }
@@ -19,17 +19,17 @@ public class DataStructureFactory {
         return null;
     }
 
-    public static IDataStructure build(String structureType){
+    public static IDataStructure buildEmptyStructure(String structureType){
         for (AvailableStructures structures : AvailableStructures.values()){
             if (structures.name().equals(structureType)){
-                return build(structures);
+                return buildEmptyStructure(structures);
             }
         }
 
         return null;
     }
 
-    public static IDataStructure build(AvailableStructures structureType){
+    public static IDataStructure buildEmptyStructure(AvailableStructures structureType){
         return switch (structureType) {
             case ArrayStructure -> new ArrayStructure();
             case TreeStructure -> new TreeStructure();

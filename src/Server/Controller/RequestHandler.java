@@ -1,17 +1,16 @@
 package Server.Controller;
 
+import Factories.DataStructureFactory;
+import Interfaces.BuildingCallback;
 import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
 import Server.Model.RequestTypes;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.LinkedList;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class RequestHandler implements FileFoundCallback{
+public class RequestHandler implements FileFoundCallback, BuildingCallback {
     private final BufferedWriter writer;
     private final BufferedOutputStream outputStream;
     private final BufferedReader reader;
@@ -66,5 +65,27 @@ public class RequestHandler implements FileFoundCallback{
         }
 
         return data;
+    }
+
+    public void createStructure(File file){
+        DataStructureFactory.buildEmptyStructure(structure).build(file, this);
+    }
+
+    @Override
+    public void onBuilding(String name) {
+        while (!structure.isDone()){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        try {
+            writer.write("HTTP/1.1 200 OK"); //autoFlush=true streams are closed in calling method
+            writer.newLine();
+            writer.write(name);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

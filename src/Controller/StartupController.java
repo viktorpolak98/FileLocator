@@ -16,7 +16,7 @@ public class StartupController {
     }
 
     public void createDataStructure(String structure){
-        dataStructure = DataStructureFactory.build(structure);
+        dataStructure = DataStructureFactory.buildEmptyStructure(structure);
         if (!startMainGUI()){
             JOptionPane.showMessageDialog(new JFrame(), "Please select an option");
         }
