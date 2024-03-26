@@ -1,17 +1,13 @@
 package Server.Runner;
 
-import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
 import Server.Controller.RequestHandler;
 import Server.Controller.ServerClientController;
-import Server.Model.RequestTypes;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 
 public class Client implements Runnable {
     private final Socket socket;
@@ -40,7 +36,7 @@ public class Client implements Runnable {
 
             RequestHandler requestHandler = new RequestHandler(writer, outputStream, reader);
 
-            requestHandler.handleRequest();
+            requestHandler.assignRequest();
             //busy waiting: change later
             while (!requestHandler.requestIsHandled()){
                 try{

@@ -22,7 +22,7 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
         this.reader = reader;
     }
 
-    public boolean handleRequest() throws IOException {
+    public boolean assignRequest() throws IOException {
         String input = reader.readLine();
         StringTokenizer parse = new StringTokenizer(input);
 
@@ -30,12 +30,7 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
 
         Optional<RequestTypes> type = RequestTypes.getRequestType(method);
 
-        if(type.isPresent()){
-            writer.write("HTTP/1.1 404 Bad request"); //autoFlush=true streams are closed in calling method
-            return false;
-        }
-
-        return true;
+        return assignRequest(type);
     }
 
     public boolean requestIsHandled(){
@@ -67,9 +62,64 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
         return data;
     }
 
-    public void createStructure(File file){
-        DataStructureFactory.buildEmptyStructure(structure).build(file, this);
+    private boolean assignRequest(Optional<RequestTypes> type) throws IOException {
+        if(type.isPresent()){
+            writer.write("HTTP/1.1 404 Bad request"); //autoFlush=true streams are closed in calling method
+            return false;
+        }
+
+        switch (type.get()){
+            case POST -> createStructure();
+        }
+
+        return true;
     }
+
+    public void createStructure() throws IOException{
+        String directoryName = reader.readLine();
+        File root = new File(directoryName);
+        receiveDirectory(root);
+        DataStructureFactory.buildEmptyStructure(structure).build(root, this);
+    }
+
+    private void receiveDirectory(File directory) throws IOException {
+
+        directory.mkdirs();
+
+        int numEntries = Integer.parseInt(reader.readLine());
+
+        for (int i = 0; i < numEntries; i++) {
+            String entryName = reader.readLine();
+
+            if (entryName == null || entryName.startsWith(".")) {
+                continue;
+            }
+
+            File entry = new File(directory, entryName);
+
+            if (entry.isDirectory()) {
+                receiveDirectory(entry);
+                continue;
+            }
+
+            receiveFile(entry);
+
+        }
+    }
+
+    private void receiveFile(File file) throws IOException {
+
+        PrintWriter writer = new PrintWriter(new FileWriter(file));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            writer.println(line);
+        }
+
+        writer.close();
+    }
+
+
 
     @Override
     public void onBuilding(String name) {
