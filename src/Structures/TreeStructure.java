@@ -6,9 +6,7 @@ import Interfaces.IDataStructure;
 import Model.Node;
 
 import java.io.File;
-import java.util.List;
-import java.util.Objects;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class TreeStructure implements IDataStructure {
@@ -32,8 +30,8 @@ public class TreeStructure implements IDataStructure {
         }
 
         rootNode = new Node(rootFile);
-        buildTree(rootNode, callback);
-
+//        buildTree(rootNode, callback);
+        buildTreeWithQueue(rootNode, callback);
     }
 
     public void buildTree(Node node, BuildingCallback callback) {
@@ -46,6 +44,25 @@ public class TreeStructure implements IDataStructure {
             }
         }
         callback.onBuilding(node.getFile().getName());
+    }
+
+    public void buildTreeWithQueue(Node rootNode, BuildingCallback callback){
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(rootNode);
+
+        while (!queue.isEmpty()){
+            Node root = queue.remove();
+            String path = root.getFile().getAbsolutePath() + "/";
+
+            for (File f : Objects.requireNonNull(root.getFile().listFiles())){
+                Node childNode = new Node(new File(path + f.getName()));
+                root.addChild(childNode);
+                if (f.isDirectory()){
+                    queue.add(childNode);
+                }
+            }
+        }
+        callback.onBuilding(rootNode.getFile().getName());
     }
 
     @Override

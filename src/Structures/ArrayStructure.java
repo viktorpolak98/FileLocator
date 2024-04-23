@@ -8,6 +8,7 @@ import java.io.File;
 import java.text.FieldPosition;
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class ArrayStructure implements IDataStructure {
@@ -29,8 +30,8 @@ public class ArrayStructure implements IDataStructure {
     public void build(File rootFile, BuildingCallback callback){
         rootList = new ArrayList<>();
 
-        populateArray(rootFile, rootList, callback);
-
+//        populateArray(rootFile, rootList, callback);
+        populateArrayQueue(rootFile, rootList, callback);
     }
 
     @Override
@@ -86,5 +87,24 @@ public class ArrayStructure implements IDataStructure {
             }
         }
         callback.onBuilding(rootFile.getName());
+    }
+
+    private void populateArrayQueue(File rootFile, List<File> files, BuildingCallback callback){
+        Queue<File> queue = new LinkedList<>();
+
+        queue.add(rootFile);
+        files.add(rootFile);
+
+        while (!queue.isEmpty()){
+            File root = queue.remove();
+            for (File f : Objects.requireNonNull(root.listFiles())){
+                files.add(f);
+                if (f.isDirectory()){
+                    queue.add(f);
+                }
+            }
+        }
+        callback.onBuilding(rootFile.getName());
+
     }
 }
