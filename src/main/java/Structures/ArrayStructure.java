@@ -79,7 +79,7 @@ public class ArrayStructure implements IDataStructure {
         }
     }
 
-    private void populateArray(File rootFile, List<File> files, BuildingCallback callback){
+    public void populateArray(File rootFile, List<File> files, BuildingCallback callback){
         for(File file: Objects.requireNonNull(rootFile.listFiles())){
             files.add(file);
             if (file.isDirectory()){
@@ -89,7 +89,7 @@ public class ArrayStructure implements IDataStructure {
         callback.onBuilding(rootFile.getName());
     }
 
-    private void populateArrayQueue(File rootFile, List<File> files, BuildingCallback callback){
+    public void populateArrayQueue(File rootFile, List<File> files, BuildingCallback callback){
         Queue<File> queue = new LinkedList<>();
 
         queue.add(rootFile);
