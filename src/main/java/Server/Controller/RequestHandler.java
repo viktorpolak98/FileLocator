@@ -113,25 +113,10 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
 
             if (entry.isDirectory()) {
                 receiveDirectory(entry);
-                continue;
             }
-
-            receiveFile(entry);
-
         }
     }
 
-    private void receiveFile(File file) throws IOException {
-
-        PrintWriter writer = new PrintWriter(new FileWriter(file));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            writer.println(line);
-        }
-
-        writer.close();
-    }
 
 
 
