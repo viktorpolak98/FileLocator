@@ -10,7 +10,7 @@ public class MainPerformanceTester {
             testBuildSpeed.testTreeStructureBuildWithQueue();
         }
 
-        System.out.println("Build speeds for ArrayStructure\n");
+        System.out.println("\nBuild speeds for ArrayStructure\n");
         for (int i = 0; i < 5; i++){
             testBuildSpeed.testArrayStructureBuildWithRecursion();
             testBuildSpeed.testArrayStructureBuildWithQueue();

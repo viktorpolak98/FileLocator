@@ -30,7 +30,9 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
 
         Optional<RequestTypes> type = RequestTypes.getRequestType(method);
 
-        return assignRequest(type);
+
+
+        return assignRequest(type.orElse(null));
     }
 
     public boolean requestIsHandled(){
@@ -62,20 +64,32 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
         return data;
     }
 
-    private boolean assignRequest(Optional<RequestTypes> type) throws IOException {
-        if(type.isPresent()){
+    private boolean validateRequest(RequestTypes type) throws IOException {
+        if(type == null) {
             writer.write("HTTP/1.1 404 Bad request"); //autoFlush=true streams are closed in calling method
             return false;
         }
+        return true;
+    }
 
-        switch (type.get()){
+    private boolean assignRequest(RequestTypes type) throws IOException {
+        if (!validateRequest(type)){
+            return false;
+        }
+        switch (type){
             case POST -> createStructure();
+            case GET -> getStructure();
         }
 
         return true;
     }
 
-    public void createStructure() throws IOException{
+    private void getStructure() throws IOException {
+        //TODO: Write class to stream
+        outputStream.write(structure.toString().getBytes());
+    }
+
+    public void createStructure() throws IOException {
         String directoryName = reader.readLine();
         File root = new File(directoryName);
         receiveDirectory(root);
