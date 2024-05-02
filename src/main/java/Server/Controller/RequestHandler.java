@@ -78,22 +78,24 @@ public class RequestHandler implements FileFoundCallback, BuildingCallback {
         }
         switch (type){
             case POST -> createStructure();
-            case GET -> getStructure();
+            case GET -> getSearchResult();
         }
 
         return true;
     }
 
-    private void getStructure() throws IOException {
-        //TODO: Write class to stream
-        outputStream.write(structure.toString().getBytes());
+    private void getSearchResult() throws IOException {
+        String searchQuery = reader.readLine();
+        structure.search(searchQuery, this);
     }
 
     public void createStructure() throws IOException {
         String directoryName = reader.readLine();
+        String structureType = reader.readLine();
         File root = new File(directoryName);
-        receiveDirectory(root);
-        DataStructureFactory.buildEmptyStructure(structure).build(root, this);
+//        receiveDirectory(root);
+        structure = DataStructureFactory.buildEmptyStructure(structureType);
+        structure.build(root, this);
     }
 
     private void receiveDirectory(File directory) throws IOException {

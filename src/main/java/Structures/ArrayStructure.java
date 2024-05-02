@@ -5,10 +5,8 @@ import Interfaces.FileFoundCallback;
 import Interfaces.IDataStructure;
 
 import java.io.File;
-import java.text.FieldPosition;
 import java.util.*;
 import java.util.concurrent.Executors;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class ArrayStructure implements IDataStructure {

@@ -16,7 +16,7 @@ public class DataStructureFactory {
             return new TreeStructure();
         }
 
-        return null;
+        return buildEmptyStructure(AvailableStructures.TreeStructure); //Default
     }
 
     public static IDataStructure buildEmptyStructure(String structureType){
@@ -26,7 +26,7 @@ public class DataStructureFactory {
             }
         }
 
-        return null;
+        return buildEmptyStructure(AvailableStructures.TreeStructure); //Default
     }
 
     public static IDataStructure buildEmptyStructure(AvailableStructures structureType){
