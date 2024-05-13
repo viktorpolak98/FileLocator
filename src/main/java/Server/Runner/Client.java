@@ -1,8 +1,8 @@
-package Server.Runner;
+package main.java.Server.Runner;
 
-import Interfaces.IDataStructure;
-import Server.Controller.RequestHandler;
-import Server.Controller.ServerClientController;
+import main.java.Interfaces.IDataStructure;
+import main.java.Server.Controller.RequestHandler;
+import main.java.Server.Controller.ServerClientController;
 
 import java.io.*;
 import java.net.Socket;

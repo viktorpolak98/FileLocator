@@ -1,8 +1,8 @@
-package Structures;
+package main.java.Structures;
 
-import Interfaces.BuildingCallback;
-import Interfaces.FileFoundCallback;
-import Interfaces.IDataStructure;
+import main.java.Interfaces.BuildingCallback;
+import main.java.Interfaces.FileFoundCallback;
+import main.java.Interfaces.IDataStructure;
 
 import java.io.File;
 import java.util.*;

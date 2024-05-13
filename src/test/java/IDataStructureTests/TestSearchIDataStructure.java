@@ -1,4 +1,4 @@
-package IDataStructureTests;
+package test.java.IDataStructureTests;
 
 import org.junit.jupiter.api.BeforeAll;
 

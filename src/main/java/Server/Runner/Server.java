@@ -1,6 +1,6 @@
-package Server.Runner;
+package main.java.Server.Runner;
 
-import Server.Controller.ServerClientController;
+import main.java.Server.Controller.ServerClientController;
 
 import java.io.IOException;
 import java.net.ServerSocket;

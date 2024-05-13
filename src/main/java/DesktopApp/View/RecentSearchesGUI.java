@@ -1,8 +1,8 @@
-package DesktopApp.View;
+package main.java.DesktopApp.View;
 
-import Controller.MainController;
-import Interfaces.RecentSearchesCallback;
-import Model.TableModel;
+import main.java.Controller.MainController;
+import main.java.Interfaces.RecentSearchesCallback;
+import main.java.Model.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

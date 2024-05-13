@@ -1,9 +1,9 @@
-package Factories;
+package main.java.Factories;
 
-import Structures.ArrayStructure;
-import Structures.TreeStructure;
-import Interfaces.IDataStructure;
-import Model.AvailableStructures;
+import main.java.Structures.ArrayStructure;
+import main.java.Structures.TreeStructure;
+import main.java.Interfaces.IDataStructure;
+import main.java.Model.AvailableStructures;
 
 public class DataStructureFactory {
 

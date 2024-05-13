@@ -1,8 +1,8 @@
-package Controller;
+package main.java.Controller;
 
-import Factories.DataStructureFactory;
-import Interfaces.IDataStructure;
-import DesktopApp.View.StructureChooserGUI;
+import main.java.Factories.DataStructureFactory;
+import main.java.Interfaces.IDataStructure;
+import main.java.DesktopApp.View.StructureChooserGUI;
 
 import javax.swing.*;
 

@@ -1,4 +1,4 @@
-package Server.Model;
+package main.java.Server.Model;
 
 import java.util.Optional;
 

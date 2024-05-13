@@ -1,10 +1,10 @@
-package Server.Controller;
+package main.java.Server.Controller;
 
-import Factories.DataStructureFactory;
-import Interfaces.BuildingCallback;
-import Interfaces.FileFoundCallback;
-import Interfaces.IDataStructure;
-import Server.Model.RequestTypes;
+import main.java.Factories.DataStructureFactory;
+import main.java.Interfaces.BuildingCallback;
+import main.java.Interfaces.FileFoundCallback;
+import main.java.Interfaces.IDataStructure;
+import main.java.Server.Model.RequestTypes;
 
 import java.io.*;
 import java.util.Optional;

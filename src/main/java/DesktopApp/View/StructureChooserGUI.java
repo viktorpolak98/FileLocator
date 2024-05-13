@@ -1,7 +1,7 @@
-package DesktopApp.View;
+package main.java.DesktopApp.View;
 
-import Controller.StartupController;
-import Model.AvailableStructures;
+import main.java.Controller.StartupController;
+import main.java.Model.AvailableStructures;
 
 import javax.swing.*;
 import java.awt.*;
