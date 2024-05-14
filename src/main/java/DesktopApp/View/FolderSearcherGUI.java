@@ -1,9 +1,9 @@
-package main.java.DesktopApp.View;
+package DesktopApp.View;
 
-import main.java.Controller.MainController;
-import main.java.Interfaces.BuildingCallback;
-import main.java.Interfaces.FileFoundCallback;
-import main.java.Model.TableModel;
+import Controller.MainController;
+import Interfaces.BuildingCallback;
+import Interfaces.FileFoundCallback;
+import Model.TableModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
-package main.java.DesktopApp.View;
+package DesktopApp.View;
 
-import main.java.Interfaces.IVisualizerGUI;
-import main.java.Model.Node;
+import Interfaces.IVisualizerGUI;
+import Model.Node;
 
 import java.util.List;
 import javax.swing.*;

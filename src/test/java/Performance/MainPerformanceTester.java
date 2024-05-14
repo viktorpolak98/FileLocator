@@ -1,4 +1,4 @@
-package test.java.Performance;
+package Performance;
 
 public class MainPerformanceTester {
     public static void main(String[] args) {

@@ -1,11 +1,11 @@
-package test.java.Performance;
+package Performance;
 
-import main.java.Factories.DataStructureFactory;
-import main.java.Interfaces.BuildingCallback;
-import main.java.Model.AvailableStructures;
-import main.java.Model.Node;
-import main.java.Structures.ArrayStructure;
-import main.java.Structures.TreeStructure;
+import Factories.DataStructureFactory;
+import Interfaces.BuildingCallback;
+import Model.AvailableStructures;
+import Model.Node;
+import Structures.ArrayStructure;
+import Structures.TreeStructure;
 
 import java.io.File;
 import java.util.ArrayList;

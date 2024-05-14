@@ -1,11 +1,11 @@
-package main.java.Controller;
+package Controller;
 
-import main.java.Interfaces.BuildingCallback;
-import main.java.Interfaces.FileFoundCallback;
-import main.java.Interfaces.IDataStructure;
-import main.java.Model.Cache;
-import main.java.DesktopApp.View.FolderSearcherGUI;
-import main.java.DesktopApp.View.RecentSearchesGUI;
+import Interfaces.BuildingCallback;
+import Interfaces.FileFoundCallback;
+import Interfaces.IDataStructure;
+import Model.Cache;
+import DesktopApp.View.FolderSearcherGUI;
+import DesktopApp.View.RecentSearchesGUI;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -47,7 +47,7 @@ public class MainController {
             return savedCache;
         }
         try {
-            FileInputStream fis = new FileInputStream("C:\\Users\\vikto\\Documents\\GitHub\\FileLocator\\utilFiles\\cache.txt");
+            FileInputStream fis = new FileInputStream("utilFiles\\cache.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             savedCache = (Cache) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {

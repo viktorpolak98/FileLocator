@@ -1,4 +1,4 @@
-package test.java.Util;
+package Util;
 
 import java.io.File;
 import java.util.*;

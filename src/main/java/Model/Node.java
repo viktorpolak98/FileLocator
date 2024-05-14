@@ -1,4 +1,4 @@
-package main.java.Model;
+package Model;
 
 import javax.swing.tree.TreeNode;
 import java.io.File;

@@ -1,6 +1,6 @@
-package main.java.Server.Controller;
+package Server.Controller;
 
-import main.java.Server.Runner.Server;
+import Server.Runner.Server;
 
 
 public class ServerClientController {

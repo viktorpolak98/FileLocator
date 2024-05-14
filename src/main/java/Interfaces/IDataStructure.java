@@ -1,4 +1,4 @@
-package main.java.Interfaces;
+package Interfaces;
 
 import java.io.File;
 import java.util.Vector;
