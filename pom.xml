@@ -6,7 +6,7 @@
 
 
 
-    <groupId>FileLocator</groupId>
+    <groupId>com.FileLocator</groupId>
     <artifactId>FileLocator</artifactId>
     <version>0.1</version>
 
