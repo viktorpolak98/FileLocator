@@ -21,9 +21,9 @@ pom.xml.bak
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-DesktopView/.mvn/timing.properties
-DesktopView/.mvn/wrapper/maven-wrapper.jar
-DesktopView/.mvn/wrapper/maven-wrapper.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
 
 ##############################
 ## Gradle
