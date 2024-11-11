@@ -1,9 +1,9 @@
 package Performance;
 
 import LogicFactories.DataStructureFactory;
-import Interfaces.BuildingCallback;
-import Model.AvailableStructures;
-import Model.Node;
+import LogicInterfaces.BuildingCallback;
+import LogicModel.AvailableStructures;
+import LogicModel.Node;
 import LogicStructures.ArrayStructure;
 import LogicStructures.TreeStructure;
 

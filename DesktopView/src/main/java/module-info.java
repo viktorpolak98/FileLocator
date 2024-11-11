@@ -5,4 +5,6 @@ module com.DesktopView {
 
     opens com.view.view to javafx.fxml;
     exports com.view.view;
+    exports Controller;
+    opens Controller to javafx.fxml;
 }

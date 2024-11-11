@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.StructureChooserController"
+      prefHeight="400.0" prefWidth="300.0"
+      alignment="CENTER">
+
+    <VBox alignment="BASELINE_LEFT">
+        <VBox.margin>
+            <Insets left="5.0"/>
+        </VBox.margin>
+        <RadioButton fx:id="treeStructureRBtn" text="Tree Structure">
+            <padding>
+                <Insets bottom="5.0" top="5.0"/>
+            </padding>
+            <toggleGroup>
+                <ToggleGroup fx:id="structureChooserGroup"/>
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="arrayStructureRBtn" text="Array Structure">
+            <padding>
+                <Insets bottom="5.0"/>
+            </padding>
+            <toggleGroup>
+                <fx:reference source="structureChooserGroup"/>
+            </toggleGroup>
+        </RadioButton>
+    </VBox>
+
+    <Pane VBox.vgrow="ALWAYS"/>
+
+    <Button fx:id="structureChooserBtn" text="Select" onAction="#onSelectButtonAction">
+        <VBox.margin>
+            <Insets bottom="5.0"/>
+        </VBox.margin>
+    </Button>
+
+</VBox>
