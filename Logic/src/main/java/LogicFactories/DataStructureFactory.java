@@ -20,9 +20,9 @@ public class DataStructureFactory {
     }
 
     public static IDataStructure buildEmptyStructure(String structureType){
-        for (AvailableStructures structures : AvailableStructures.values()){
-            if (structures.name().equals(structureType)){
-                return buildEmptyStructure(structures);
+        for (AvailableStructures structure : AvailableStructures.values()){
+            if (structure.getType().equals(structureType)){
+                return buildEmptyStructure(structure);
             }
         }
 
