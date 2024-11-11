@@ -1,5 +1,6 @@
 package com.view.view;
 
+import Controller.StructureChooserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +13,10 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("structure-chooser.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 400);
+
+        StructureChooserController controller = fxmlLoader.getController();
+        controller.setStage(stage);
+
         stage.setTitle("Choose a structure");
         stage.setScene(scene);
         stage.show();
