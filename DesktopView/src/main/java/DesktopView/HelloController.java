@@ -1,4 +1,4 @@
-package com.view.view;
+package DesktopView;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -3,8 +3,8 @@ module com.DesktopView {
     requires javafx.fxml;
     requires com.FileLocator.Logic;
 
-    opens com.view.view to javafx.fxml;
-    exports com.view.view;
+    opens DesktopView to javafx.fxml;
+    exports DesktopView;
     exports Controller;
     opens Controller to javafx.fxml;
 }

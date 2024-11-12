@@ -1,4 +1,4 @@
-package com.view.view;
+package DesktopView;
 
 import Controller.StructureChooserController;
 import javafx.application.Application;
@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
 
         StructureChooserController controller = fxmlLoader.getController();
         controller.setStage(stage);
+        controller.setApplication(this);
 
         stage.setTitle("Choose a structure");
         stage.setScene(scene);
