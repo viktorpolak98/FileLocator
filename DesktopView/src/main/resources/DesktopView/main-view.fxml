@@ -6,9 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.MainViewController"
-            prefHeight="600.0" prefWidth="1000.0">
-
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.MainViewController"
+      prefHeight="600.0" prefWidth="1000.0">
+    <HBox spacing="5">
+        <padding>
+            <Insets top="10" left="10" right="10" bottom="10"/>
+        </padding>
+        <Button text="Select root" onAction="#onRootSelectionAction">
+        </Button>
+        <TextField  promptText="Search for a file" fx:id="fileSearchField"/>
+        <Button text="Search" onAction="#onSearchFileAction"/>
+    </HBox>
+</VBox>
