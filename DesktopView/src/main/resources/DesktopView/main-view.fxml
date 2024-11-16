@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.skin.TableHeaderRow?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="Controller.MainViewController"
@@ -20,4 +21,10 @@
         <TextField  promptText="Search for a file" fx:id="fileSearchField"/>
         <Button text="Search" onAction="#onSearchFileAction"/>
     </HBox>
+    <TableView fx:id="resultView">
+        <columns>
+            <TableColumn fx:id="fileName" text="Name" prefWidth="200.0"/>
+            <TableColumn fx:id="fileLocation" text="Location" prefWidth="800" />
+        </columns>
+    </TableView>
 </VBox>
