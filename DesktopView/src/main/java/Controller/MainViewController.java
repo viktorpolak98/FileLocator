@@ -1,14 +1,21 @@
 package Controller;
 
+import LogicInterfaces.FileFoundCallback;
 import LogicInterfaces.IDataStructure;
+import ViewModel.TableViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class MainViewController {
+import java.io.File;
+
+public class MainViewController implements FileFoundCallback {
     private IDataStructure dataStructure;
     @FXML
     TextField fileSearchField;
+    @FXML
+    TableView<TableViewModel> resultView;
 
     public void setDataStructure(IDataStructure dataStructure) {
         this.dataStructure = dataStructure;
@@ -18,5 +25,10 @@ public class MainViewController {
     }
 
     public void onSearchFileAction(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void onFileFound(File file) {
+
     }
 }
