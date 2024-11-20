@@ -23,8 +23,8 @@
     </HBox>
     <TableView fx:id="resultView">
         <columns>
-            <TableColumn fx:id="fileName" text="Name" prefWidth="200.0"/>
-            <TableColumn fx:id="fileLocation" text="Location" prefWidth="800" />
+            <TableColumn fx:id="fileNameColumn" text="Name" prefWidth="200.0"/>
+            <TableColumn fx:id="fileLocationColumn" text="Location" prefWidth="800" />
         </columns>
     </TableView>
 </VBox>

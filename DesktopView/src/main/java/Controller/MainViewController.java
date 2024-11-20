@@ -3,32 +3,51 @@ package Controller;
 import LogicInterfaces.FileFoundCallback;
 import LogicInterfaces.IDataStructure;
 import ViewModel.TableViewModel;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.File;
 
 public class MainViewController implements FileFoundCallback {
     private IDataStructure dataStructure;
     @FXML
-    TextField fileSearchField;
+    private TextField fileSearchField;
     @FXML
-    TableView<TableViewModel> resultView;
+    private TableView<TableViewModel> resultView;
+    @FXML
+    private TableColumn<TableViewModel, String> fileNameColumn;
+    @FXML
+    private TableColumn<TableViewModel, String> fileLocationColumn;
+    private final ObservableList<TableViewModel> tableData = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        fileLocationColumn.setCellValueFactory(new PropertyValueFactory<>("fileLocation"));
+        resultView.setItems(tableData);
+    }
 
     public void setDataStructure(IDataStructure dataStructure) {
         this.dataStructure = dataStructure;
     }
 
-    public void onRootSelectionAction(ActionEvent actionEvent) {
+    public void onRootSelectionAction() {
     }
 
-    public void onSearchFileAction(ActionEvent actionEvent) {
+    public void onSearchFileAction() {
+        tableData.clear();
+        dataStructure.search(fileSearchField.getText(), this);
     }
 
     @Override
-    public void onFileFound(File file) {
-
+    public synchronized void onFileFound(File file) {
+        Platform.runLater(() -> tableData.add(new TableViewModel(file.getName(), file.getAbsolutePath())));
     }
 }
