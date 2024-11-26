@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.skin.TableHeaderRow?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="Controller.MainViewController"
@@ -20,11 +16,13 @@
         </Button>
         <TextField  promptText="Search for a file" fx:id="fileSearchField"/>
         <Button text="Search" onAction="#onSearchFileAction"/>
+        <Label text="Root folder: "/>
+        <Label fx:id="rootFolderLabel"/>
     </HBox>
-    <TableView fx:id="resultView">
+    <TableView fx:id="resultView" prefHeight="500.0">
         <columns>
             <TableColumn fx:id="fileNameColumn" text="Name" prefWidth="200.0"/>
-            <TableColumn fx:id="fileLocationColumn" text="Location" prefWidth="800" />
+            <TableColumn fx:id="fileLocationColumn" text="Location" prefWidth="785" />
         </columns>
     </TableView>
 </VBox>
