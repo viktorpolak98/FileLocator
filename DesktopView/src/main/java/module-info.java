@@ -4,7 +4,9 @@ module com.DesktopView {
     requires com.FileLocator.Logic;
 
     opens DesktopView to javafx.fxml;
+    opens Controller to javafx.fxml;
+    opens ViewModel to javafx.base;
+
     exports DesktopView;
     exports Controller;
-    opens Controller to javafx.fxml;
 }

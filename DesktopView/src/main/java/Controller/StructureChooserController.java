@@ -52,6 +52,7 @@ public class StructureChooserController {
 
         MainViewController controller = loader.getController();
         controller.setDataStructure(DataStructureFactory.buildEmptyStructure(selection));
+        controller.setStage(stage);
 
         stage.setTitle("FileLocator");
         stage.setScene(scene);
