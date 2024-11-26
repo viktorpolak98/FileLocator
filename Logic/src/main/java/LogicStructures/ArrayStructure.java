@@ -14,6 +14,7 @@ public class ArrayStructure implements IDataStructure {
     private int threadCount;
     private final Vector<File> previousResultList;
     private List<File> rootList;
+    private File root;
 
     public ArrayStructure(){
         previousResultList = new Vector<>();
@@ -25,8 +26,14 @@ public class ArrayStructure implements IDataStructure {
     }
 
     @Override
+    public File getRoot() {
+        return root;
+    }
+
+    @Override
     public void build(File rootFile, BuildingCallback callback){
         rootList = new ArrayList<>();
+        root = rootFile;
 
 //        populateArray(rootFile, rootList, callback);
         populateArrayQueue(rootFile, rootList, callback);

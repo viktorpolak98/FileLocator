@@ -24,6 +24,11 @@ public class TreeStructure implements IDataStructure {
     }
 
     @Override
+    public File getRoot() {
+        return rootNode.getFile();
+    }
+
+    @Override
     public void build(File rootFile, BuildingCallback callback) {
         if (!rootFile.isDirectory()){
             return;
