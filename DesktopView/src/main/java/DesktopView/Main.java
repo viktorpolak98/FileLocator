@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("structure-chooser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("structure-chooser.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 400);
 
         StructureChooserController controller = fxmlLoader.getController();
