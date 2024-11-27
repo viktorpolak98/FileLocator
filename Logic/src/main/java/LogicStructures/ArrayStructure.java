@@ -36,7 +36,7 @@ public class ArrayStructure implements IDataStructure {
         root = rootFile;
 
 //        populateArray(rootFile, rootList, callback);
-        populateArrayQueue(rootFile, rootList, callback);
+        new Thread(() -> populateArrayQueue(rootFile, rootList, callback)).start();
     }
 
     @Override
@@ -90,6 +90,7 @@ public class ArrayStructure implements IDataStructure {
             if (file.isDirectory()){
                 populateArray(file, files, callback);
             }
+            callback.onBuilding(file.getName());
         }
         callback.onBuilding(rootFile.getName());
     }
@@ -107,6 +108,7 @@ public class ArrayStructure implements IDataStructure {
                 if (f.isDirectory()){
                     queue.add(f);
                 }
+                callback.onBuilding(f.getName());
             }
         }
         callback.onBuilding(rootFile.getName());

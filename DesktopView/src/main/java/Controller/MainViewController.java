@@ -71,6 +71,6 @@ public class MainViewController implements FileFoundCallback, BuildingCallback {
 
     @Override
     public void onBuilding(String name) {
-        rootFolderLabel.setText(name);
+        Platform.runLater(() -> rootFolderLabel.setText(name));
     }
 }

@@ -36,7 +36,7 @@ public class TreeStructure implements IDataStructure {
 
         rootNode = new Node(rootFile);
 //        buildTree(rootNode, callback);
-        buildTreeWithQueue(rootNode, callback);
+        new Thread(() -> buildTreeWithQueue(rootNode, callback)).start();
     }
 
     public void buildTree(Node node, BuildingCallback callback) {
@@ -47,6 +47,8 @@ public class TreeStructure implements IDataStructure {
             if(childFile.isDirectory()){
                 buildTree(childNode, callback);
             }
+
+            callback.onBuilding(childFile.getName());
         }
         callback.onBuilding(node.getFile().getName());
     }
@@ -65,6 +67,8 @@ public class TreeStructure implements IDataStructure {
                 if (f.isDirectory()){
                     queue.add(childNode);
                 }
+
+                callback.onBuilding(f.getName());
             }
         }
         callback.onBuilding(rootNode.getFile().getName());
