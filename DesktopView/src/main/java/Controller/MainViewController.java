@@ -27,8 +27,6 @@ public class MainViewController implements FileFoundCallback, BuildingCallback {
     private TableView<TableViewModel> resultView;
     @FXML
     private TableColumn<TableViewModel, String> fileNameColumn;
-    @FXML
-    private TableColumn<TableViewModel, String> fileLocationColumn;
     private final ObservableList<TableViewModel> tableData = FXCollections.observableArrayList();
     @FXML
     private Label rootFolderLabel;
@@ -36,7 +34,6 @@ public class MainViewController implements FileFoundCallback, BuildingCallback {
     @FXML
     public void initialize() {
         fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        fileLocationColumn.setCellValueFactory(new PropertyValueFactory<>("fileLocation"));
         resultView.setItems(tableData);
     }
 
@@ -65,7 +62,7 @@ public class MainViewController implements FileFoundCallback, BuildingCallback {
 
     @Override
     public synchronized void onFileFound(File file) {
-        Platform.runLater(() -> tableData.add(new TableViewModel(file.getName(), file.getAbsolutePath())));
+        Platform.runLater(() -> tableData.add(new TableViewModel(file.getName())));
     }
 
     public void setStage(Stage stage){

@@ -3,11 +3,8 @@ package ViewModel;
 public class TableViewModel {
     private String fileName;
 
-    private String fileLocation;
-
-    public TableViewModel(String fileName, String fileLocation) {
+    public TableViewModel(String fileName) {
         this.fileName = fileName;
-        this.fileLocation = fileLocation;
     }
 
     public String getFileName() {
@@ -18,11 +15,4 @@ public class TableViewModel {
         this.fileName = fileName;
     }
 
-    public String getFileLocation() {
-        return fileLocation;
-    }
-
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
-    }
 }
