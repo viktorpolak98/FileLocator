@@ -16,6 +16,10 @@ public class TreeStructure implements IDataStructure {
 
     public TreeStructure() {
         previousResultList =  new Vector<>();
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        Thread shutdown = new Thread(() -> executor.shutdown());
+        Runtime.getRuntime().addShutdownHook(shutdown);
     }
 
     @Override
@@ -75,13 +79,15 @@ public class TreeStructure implements IDataStructure {
     }
 
     @Override
-    public Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback) {
-        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
         previousResultList.clear();
         for (Node child : rootNode.getChildren()) {
             traverseFolder(child, searchQuery, fileFoundCallback);
         }
+    }
 
+    @Override
+    public Vector<File> getLastSearch(){
         //busy waiting: change later
         while (!isDone()){
             try {
@@ -90,7 +96,6 @@ public class TreeStructure implements IDataStructure {
                 e.printStackTrace();
             }
         }
-        executor.shutdown();
 
         return new Vector<>(previousResultList);
     }
@@ -105,7 +110,7 @@ public class TreeStructure implements IDataStructure {
     private void searchChildren(String searchQuery, FileFoundCallback callback, List<Node> nodes) {
         for (Node child : nodes) {
             if (child.getFile().isDirectory()) {
-                executor.submit(() -> traverseFolder(child, searchQuery, callback));
+                executor.execute(() -> traverseFolder(child, searchQuery, callback));
             } else {
                 if (child.getFile().getName().contains(searchQuery)) {
                     callback.onFileFound(child.getFile());

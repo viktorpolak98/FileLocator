@@ -60,8 +60,8 @@ public class MainController {
     }
 
     public void search(String query, FileFoundCallback callback){
-        Vector<File> previousSearch = dataStructure.search(query, callback);
-        updateRecentSearches(previousSearch);
+//        Vector<File> previousSearch = dataStructure.search(query, callback);
+//        updateRecentSearches(previousSearch);
     }
 
     private void updateRecentSearches(Vector<File> previousSearch){

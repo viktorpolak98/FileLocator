@@ -18,6 +18,11 @@ public class ArrayStructure implements IDataStructure {
 
     public ArrayStructure(){
         previousResultList = new Vector<>();
+        threadCount = Runtime.getRuntime().availableProcessors();
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
+
+        Thread shutdown = new Thread(() -> executor.shutdown());
+        Runtime.getRuntime().addShutdownHook(shutdown);
     }
 
     @Override
@@ -40,12 +45,16 @@ public class ArrayStructure implements IDataStructure {
     }
 
     @Override
-    public Vector<File> search(String searchQuery, FileFoundCallback fileFoundCallback) {
+    public void search(String searchQuery, FileFoundCallback fileFoundCallback) {
         threadCount = Runtime.getRuntime().availableProcessors();
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
 
         searchConcurrently(searchQuery, fileFoundCallback);
 
+    }
+
+    @Override
+    public Vector<File> getLastSearch(){
         //busy waiting: change later
         while (!isDone()){
             try {
@@ -54,7 +63,6 @@ public class ArrayStructure implements IDataStructure {
                 e.printStackTrace();
             }
         }
-        executor.shutdown();
 
         return new Vector<>(previousResultList);
     }
@@ -67,7 +75,7 @@ public class ArrayStructure implements IDataStructure {
         while (i < rootList.size()){
             int start = searchField * i;
             int end = searchField * (i + 1);
-            executor.submit(() -> searchSubArray(start, end, searchQuery, callback));
+            executor.execute(() -> searchSubArray(start, end, searchQuery, callback));
             i++;
         }
     }
